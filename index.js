@@ -9,6 +9,11 @@ require('electron-debug')();
 // Prevent window being garbage collected
 let mainWindow;
 
+// Actual code
+
+const parser = require('./utils/parser');
+console.log(parser.parse("### aight"));
+
 function onClosed() {
 	// Dereference the window
 	// For multiple windows store them in an array
