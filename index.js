@@ -81,4 +81,22 @@ function openFile() {
 	mainWindow.webContents.send('file-opened', file, content)
 }
 
-exports.openFile = openFile
+function saveFile (content) {
+  const fileName = dialog.showSaveDialog(mainWindow, {
+    title: 'Save HTML Output',
+    defaultPath: app.getPath('documents'),
+    filters: [
+      { name: 'HTML Files', extensions: ['html'] }
+    ]
+  })
+
+  if (!fileName) return
+
+  fs.writeFileSync(fileName, content)
+}
+
+module.exports = {
+	openFile,
+	saveFile
+}
+

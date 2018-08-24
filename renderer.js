@@ -24,3 +24,7 @@ const mainProcess = electron.remote.require('./index')
 $('.open-file-button').addEventListener('click', () => {
   mainProcess.openFile()
 })
+
+$('.save-file-button').addEventListener('click', () => {
+  mainProcess.saveFile($('.rendered-html').innerHTML)
+})
