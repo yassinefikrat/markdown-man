@@ -16,3 +16,11 @@ $('.raw-markdown').addEventListener('keyup', event => {
 	const content = event.target.value
 	$('.rendered-html').innerHTML = parse(content)
 })
+
+
+// Wiring up the button
+const mainProcess = electron.remote.require('./index')
+
+$('.open-file-button').addEventListener('click', () => {
+  mainProcess.openFile()
+})

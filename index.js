@@ -55,7 +55,7 @@ app.on('ready', () => {
 	mainWindow = createMainWindow()
 
 	mainWindow.webContents.on('did-finish-load', () => {
-		openFile()
+		
 	})
 })
 
@@ -79,3 +79,5 @@ function openFile() {
 
 	mainWindow.webContents.send('file-opened', file, content)
 }
+
+exports.openFile = openFile
