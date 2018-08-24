@@ -32,6 +32,9 @@
     "rules": {
       "object-curly-spacing": 0
     },
-    "envs": ["node", "browser"]
+    "envs": [
+      "node",
+      "browser"
+    ]
   }
 }
