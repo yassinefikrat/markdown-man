@@ -35,6 +35,7 @@ function createMainWindow() {
 
 	win.loadURL(`file://${__dirname}/index.html`)
 	win.on('closed', onClosed)
+	win.setMenu(null)
 
 	return win
 }
