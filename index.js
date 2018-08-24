@@ -74,19 +74,27 @@ function openFile() {
 		return
 	}
 
-	const file = files[0]
+	const fileName = files[0]
 
-	const content = fs.readFileSync(file).toString()
+	const content = fs.readFileSync(fileName).toString()
 
-	mainWindow.webContents.send('file-opened', file, content)
+	mainWindow.webContents.send('file-opened', fileName, content)
 }
 
-function saveFile (content) {
+function saveFile (fileName, content) {
+	try {
+		fs.writeFileSync(fileName, content)
+	} catch (e) {
+		console.log(e)
+	}
+}
+
+function saveFileAs (content) {
   const fileName = dialog.showSaveDialog(mainWindow, {
-    title: 'Save HTML Output',
+    title: 'Save As',
     defaultPath: app.getPath('documents'),
     filters: [
-      { name: 'HTML Files', extensions: ['html'] }
+      { name: 'Markdown Files', extensions: ['md', 'markdown', 'txt'] }
     ]
   })
 
@@ -97,6 +105,7 @@ function saveFile (content) {
 
 module.exports = {
 	openFile,
-	saveFile
+	saveFile,
+	saveFileAs
 }
 
