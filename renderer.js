@@ -6,13 +6,15 @@ const $ = selector => document.querySelector(selector)
 
 const { parse } = require('./utils/parser')
 
+let currentFile
+let saveIsDisabled = true
+
 // Helper function to be called when a file is able to be saved
 const activateSaveButtons = () => {
 	$('.save-button').removeAttribute('disabled')
 	$('.save-as-button').removeAttribute('disabled')
+	saveIsDisabled = false
 }
-
-let currentFile
 
 ipc.on('file-opened', (event, fileName, content) => {
 	$('.raw-markdown').value = content
@@ -21,10 +23,16 @@ ipc.on('file-opened', (event, fileName, content) => {
 	activateSaveButtons()
 })
 
+ipc.on('file-saved', (event, fileName) => {
+	if (!currentFile) currentFile = fileName
+})
+
 // Triggers at every change in the markdown editing panel
 $('.raw-markdown').addEventListener('keyup', event => {
 	const content = event.target.value
 	$('.rendered-html').innerHTML = parse(content)
+
+	if (saveIsDisabled) activateSaveButtons()
 })
 
 // Wiring up the buttons
@@ -35,7 +43,8 @@ $('.open-file-button').addEventListener('click', () => {
 })
 
 $('.save-button').addEventListener('click', () => {
-	mainProcess.saveFile(currentFile, $('.raw-markdown').value)
+	if (currentFile) mainProcess.saveFile(currentFile, $('.raw-markdown').value)
+	else mainProcess.saveFileAs($('.raw-markdown').value)
 })
 
 $('.save-as-button').addEventListener('click', () => {

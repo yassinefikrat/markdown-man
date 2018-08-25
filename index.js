@@ -101,6 +101,8 @@ function saveFileAs(content) {
 	}
 
 	fs.writeFileSync(fileName, content)
+
+	mainWindow.webContents.send('file-saved', fileName)
 }
 
 module.exports = {
