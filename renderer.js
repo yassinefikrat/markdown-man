@@ -16,15 +16,31 @@ const activateSaveButtons = () => {
 	saveIsDisabled = false
 }
 
+const disableSaveButtons = () => {
+	$('.save-button').setAttribute('disabled', true)
+	$('.save-as-button').setAttribute('disabled', true)
+	saveIsDisabled = true
+}
+
+const activateCloseButton = () => {
+	$('.close-file-button').removeAttribute('disabled')
+}
+
+const disableCloseButton = () => {
+	$('.close-file-button').setAttribute('disabled', true)
+}
+
 ipc.on('file-opened', (event, fileName, content) => {
 	$('.raw-markdown').value = content
 	$('.rendered-html').innerHTML = parse(content)
 	currentFile = fileName
 	activateSaveButtons()
+	activateCloseButton()
 })
 
 ipc.on('file-saved', (event, fileName) => {
 	if (!currentFile) currentFile = fileName
+	activateCloseButton()
 })
 
 // Triggers at every change in the markdown editing panel
@@ -48,6 +64,13 @@ $('.save-button').addEventListener('click', () => {
 })
 
 $('.save-as-button').addEventListener('click', () => {
-	console.log('currentFile : ' + currentFile)
 	mainProcess.saveFileAs($('.raw-markdown').value)
+})
+
+$('.close-file-button').addEventListener('click', () => {
+	$('.raw-markdown').value = ''
+	$('.rendered-html').innerHTML = ''
+	currentFile = ''
+	disableSaveButtons()
+	disableCloseButton()
 })

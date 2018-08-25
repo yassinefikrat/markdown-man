@@ -41,15 +41,11 @@ function createMainWindow() {
 }
 
 app.on('window-all-closed', () => {
-	if (process.platform !== 'darwin') {
-		app.quit()
-	}
+	if (process.platform !== 'darwin') app.quit()
 })
 
 app.on('activate', () => {
-	if (!mainWindow) {
-		mainWindow = createMainWindow()
-	}
+	if (!mainWindow) mainWindow = createMainWindow()
 })
 
 app.on('ready', () => {
@@ -68,9 +64,7 @@ function openFile() {
 		]
 	})
 
-	if (!files) {
-		return
-	}
+	if (!files) return
 
 	const fileName = files[0]
 
@@ -96,9 +90,7 @@ function saveFileAs(content) {
 		]
 	})
 
-	if (!fileName) {
-		return
-	}
+	if (!fileName) return
 
 	fs.writeFileSync(fileName, content)
 
