@@ -7,19 +7,26 @@
 ### Dev
 
 ```
-$ npm install
+npm install
+```
+
+### Linter
+
+```
+npm run lint
 ```
 
 ### Run
 
 ```
-$ npm start
+npm start
 ```
 
 ### Build
 
 ```
-$ npm run build
+npm run build
 ```
 
 Builds the app for macOS, Linux, and Windows, using [electron-packager](https://github.com/electron-userland/electron-packager).
+
