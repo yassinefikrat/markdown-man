@@ -55,9 +55,7 @@ app.on('activate', () => {
 app.on('ready', () => {
 	mainWindow = createMainWindow()
 
-	mainWindow.webContents.on('did-finish-load', () => {
-		
-	})
+	mainWindow.webContents.on('did-finish-load', () => {})
 })
 
 // My functions
@@ -81,7 +79,7 @@ function openFile() {
 	mainWindow.webContents.send('file-opened', fileName, content)
 }
 
-function saveFile (fileName, content) {
+function saveFile(fileName, content) {
 	try {
 		fs.writeFileSync(fileName, content)
 	} catch (e) {
@@ -89,18 +87,20 @@ function saveFile (fileName, content) {
 	}
 }
 
-function saveFileAs (content) {
-  const fileName = dialog.showSaveDialog(mainWindow, {
-    title: 'Save As',
-    defaultPath: app.getPath('documents'),
-    filters: [
-      { name: 'Markdown Files', extensions: ['md', 'markdown', 'txt'] }
-    ]
-  })
+function saveFileAs(content) {
+	const fileName = dialog.showSaveDialog(mainWindow, {
+		title: 'Save As',
+		defaultPath: app.getPath('documents'),
+		filters: [
+			{ name: 'Markdown Files', extensions: ['md', 'markdown', 'txt'] }
+		]
+	})
 
-  if (!fileName) return
+	if (!fileName) {
+		return
+	}
 
-  fs.writeFileSync(fileName, content)
+	fs.writeFileSync(fileName, content)
 }
 
 module.exports = {
@@ -108,4 +108,3 @@ module.exports = {
 	saveFile,
 	saveFileAs
 }
-

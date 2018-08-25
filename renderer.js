@@ -6,6 +6,12 @@ const $ = selector => document.querySelector(selector)
 
 const { parse } = require('./utils/parser')
 
+// Helper function to be called when a file is able to be saved
+const activateSaveButtons = () => {
+	$('.save-button').removeAttribute('disabled')
+	$('.save-as-button').removeAttribute('disabled')
+}
+
 let currentFile
 
 ipc.on('file-opened', (event, fileName, content) => {
@@ -21,24 +27,18 @@ $('.raw-markdown').addEventListener('keyup', event => {
 	$('.rendered-html').innerHTML = parse(content)
 })
 
-
 // Wiring up the buttons
 const mainProcess = electron.remote.require('./index')
 
 $('.open-file-button').addEventListener('click', () => {
-  	mainProcess.openFile()
+	mainProcess.openFile()
 })
 
 $('.save-button').addEventListener('click', () => {
-  	mainProcess.saveFile(currentFile, $('.raw-markdown').value)
+	mainProcess.saveFile(currentFile, $('.raw-markdown').value)
 })
 
 $('.save-as-button').addEventListener('click', () => {
-	console.log("currentFile : " + currentFile)
-  	mainProcess.saveFileAs($('.raw-markdown').value)
+	console.log('currentFile : ' + currentFile)
+	mainProcess.saveFileAs($('.raw-markdown').value)
 })
-
-const activateSaveButtons = () => {
-	$('.save-button').removeAttribute("disabled")
-	$('.save-as-button').removeAttribute("disabled")
-}
