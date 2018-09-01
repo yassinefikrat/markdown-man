@@ -30,12 +30,21 @@ const disableCloseButton = () => {
 	$('.close-file-button').setAttribute('disabled', true)
 }
 
+const displayFileName = fileName => {
+	$('.yy-filename').innerHTML = fileName
+}
+
+const eraseFileName = () => {
+	$('.yy-filename').innerHTML = ''
+}
+
 ipc.on('file-opened', (event, fileName, content) => {
 	$('.raw-markdown').value = content
 	$('.rendered-html').innerHTML = parse(content)
 	currentFile = fileName
 	activateSaveButtons()
 	activateCloseButton()
+	displayFileName(fileName)
 })
 
 ipc.on('file-saved', (event, fileName) => {
@@ -73,4 +82,5 @@ $('.close-file-button').addEventListener('click', () => {
 	currentFile = ''
 	disableSaveButtons()
 	disableCloseButton()
+	eraseFileName()
 })

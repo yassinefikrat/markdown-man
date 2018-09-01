@@ -71,6 +71,15 @@ x-button > x-label {
   	min-height: 100%;
     padding-left: 10px;
     padding-right: 10px;
-    
-    overflow: auto;
+
+	overflow: auto;
+}
+
+.yy-menu {
+	justify-content: space-between;
+}
+
+.yy-menu > .yy-filename {
+	font-family: 'Roboto Mono', monospace;
+	font-weight: bold;
 }
